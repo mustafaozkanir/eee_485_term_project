@@ -9,6 +9,7 @@ No scikit-learn.
 import numpy as np
 import pandas as pd
 
+from data_prep import prepare_data
 
 # ---------------------------------------------------------------------------
 # Impurity helpers
@@ -253,7 +254,7 @@ class DecisionTree:
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    from data_prep import prepare_data
+    
 
     print("Loading and preparing data...")
     X_train, X_test, y_train, y_test = prepare_data()

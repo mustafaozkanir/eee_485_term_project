@@ -6,7 +6,7 @@ k-Nearest Neighbors classifier implemented from scratch.
 
 import numpy as np
 from data_prep import prepare_data
-from lr import (precision_score, recall_score, f1_score)
+from utils import precision_score, recall_score, f1_score, plot_confusion_matrix
 
 
 class KNearestNeighbors:
@@ -141,4 +141,11 @@ if __name__ == "__main__":
     print(f"Precision: {precision:.4f}")
     print(f"Recall   : {recall:.4f}")
     print(f"F1-score : {f1:.4f}")
+
+    plot_confusion_matrix(
+        y_test, y_pred,
+        class_names=["No Default", "Default"],
+        title=f"kNN (k={k}) — Confusion Matrix",
+        save_path="knn_confusion_matrix.png",
+    )
 
