@@ -47,26 +47,29 @@ PHASES = [
 # ─────────────────────────────────────────────────────────────
 TASKS = [
     # ── Proposal (weeks 4–5) ──────────────────────────────────
-    {"group": "Proposal", "name": "Define problem & dataset",  "start": 4, "end": 4, "owner": "together"},
-    {"group": "Proposal", "name": "Literature review",         "start": 4, "end": 5, "owner": "mustafa"},
-    {"group": "Proposal", "name": "Write proposal document",   "start": 5, "end": 5, "owner": "together"},
+    {"group": "Proposal", "name": "Dataset Research",  "start": 4, "end": 5, "owner": "together"},
+    {"group": "Proposal", "name": "Proposal Writing",         "start": 4, "end": 5, "owner": "together"},
+    {"group": "Proposal", "name": "Ask Pain Points to TA",   "start": 5, "end": 5, "owner": "together"},
 
     # ── First Report (weeks 6–8) ──────────────────────────────
-    {"group": "First Report", "name": "Data preparation pipeline",    "start": 6, "end": 6, "owner": "mustafa"},
-    {"group": "First Report", "name": "kNN implementation",           "start": 6, "end": 7, "owner": "mustafa"},
-    {"group": "First Report", "name": "Decision Tree implementation",  "start": 6, "end": 7, "owner": "furkan"},
-    {"group": "First Report", "name": "Logistic Regression impl.",    "start": 7, "end": 7, "owner": "furkan"},
-    {"group": "First Report", "name": "Initial evaluation & plots",   "start": 7, "end": 8, "owner": "together"},
-    {"group": "First Report", "name": "Write first report",           "start": 8, "end": 8, "owner": "together"},
+    {"group": "First Report", "name": "Data Preparation Pipeline",    "start": 6, "end": 7, "owner": "mustafa"},
+    {"group": "First Report", "name": "Logistic Regression Impl.",           "start": 7, "end": 8, "owner": "furkan"},
+    {"group": "First Report", "name": "kNN Implementation",    "start": 7, "end": 7, "owner": "mustafa"},
+    {"group": "First Report", "name": "Cross Validation Impl.",    "start": 7, "end": 8, "owner": "mustafa"},
+    {"group": "First Report", "name": "Preliminary Results & Plots",   "start": 7, "end": 8, "owner": "together"},
+    {"group": "First Report", "name": "First Report Writing",           "start": 8, "end": 8, "owner": "together"},
+    {"group": "First Report", "name": "Demo Preparation",           "start": 8, "end": 9, "owner": "together"},
+
 
     # ── Final Report (weeks 9–14) ─────────────────────────────
-    {"group": "Final Report", "name": "Hyperparameter tuning (CV)", "start": 9,  "end": 10, "owner": "mustafa"},
-    {"group": "Final Report", "name": "Cross-model comparison",     "start": 10, "end": 11, "owner": "together"},
-    {"group": "Final Report", "name": "Error analysis & metrics",   "start": 11, "end": 12, "owner": "furkan"},
-    {"group": "Final Report", "name": "Visualisations & plots",     "start": 11, "end": 12, "owner": "mustafa"},
-    {"group": "Final Report", "name": "Final report writing",       "start": 12, "end": 13, "owner": "together"},
+    {"group": "Final Report", "name": "Decision Trees Impl.", "start": 9,  "end": 11, "owner": "furkan"},
+    {"group": "Final Report", "name": "Neural Networks Impl.", "start": 9,  "end": 11, "owner": "mustafa"},
+    {"group": "Final Report", "name": "Hyperparameter Tuning", "start": 11,  "end": 12, "owner": "together"},
+    {"group": "Final Report", "name": "Error analysis & metrics",   "start": 12, "end": 14, "owner": "together"},
+    {"group": "Final Report", "name": "Visualisations & plots",     "start": 13, "end": 14, "owner": "together"},
+    {"group": "Final Report", "name": "Final report Writing",       "start": 13, "end": 14, "owner": "together"},
     {"group": "Final Report", "name": "Review & proofreading",      "start": 13, "end": 14, "owner": "together"},
-    {"group": "Final Report", "name": "Presentation prep",          "start": 14, "end": 14, "owner": "together"},
+    {"group": "Final Report", "name": "Demo Preparation",          "start": 14, "end": 14, "owner": "together"},
 ]
 
 # ─────────────────────────────────────────────────────────────
@@ -209,7 +212,7 @@ def draw_gantt(tasks=TASKS, save_path="gantt.png"):
             GRP_W + 0.15, y_row + TASK_H / 2,
             task["name"],
             ha="left", va="center",
-            fontsize=12,
+            fontsize=14,
         )
 
         # Week cells

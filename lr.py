@@ -35,30 +35,34 @@ def sigmoid(z):
     z = np.clip(z, -500, 500)  # numerical stability
     return 1 / (1 + np.exp(-z))
 
-def compute_loss(X, y, w, reg_lambda=0.0):
+def compute_loss(X, y, w, reg_lambda=0.0, pos_weight=1.0):
     m = X.shape[0]
     h = sigmoid(X @ w)
     eps = 1e-12
-    loss = -(1 / m) * np.sum(y * np.log(h + eps) + (1 - y) * np.log(1 - h + eps))
+    sample_weights = np.where(y == 1, pos_weight, 1.0)
+    loss_terms = -(y * np.log(h + eps) + (1 - y) * np.log(1 - h + eps))
+    loss = np.sum(sample_weights * loss_terms) / m
     reg = (reg_lambda / (2 * m)) * np.sum(w[1:] ** 2)
     return loss + reg
 
-def fit_logistic_regression(X, y, learning_rate=0.05, iterations=5000, reg_lambda=0.1):
+def fit_logistic_regression(X, y, learning_rate=0.05, iterations=5000, reg_lambda=0.1, pos_weight=1.0):
     m, n = X.shape
     w = np.zeros((n, 1))
     losses = []
+    sample_weights = np.where(y == 1, pos_weight, 1.0)
 
     for i in range(iterations):
         h = sigmoid(X @ w)
         error = h - y
 
-        grad = (1 / m) * (X.T @ error)
+        weighted_error = sample_weights * error
+        grad = (1 / m) * (X.T @ weighted_error)
         grad[1:] += (reg_lambda / m) * w[1:]  # do not regularize bias
 
         w = w - learning_rate * grad
 
         if i % 100 == 0:
-            losses.append(compute_loss(X, y, w, reg_lambda))
+            losses.append(compute_loss(X, y, w, reg_lambda, pos_weight))
 
     return w, losses
 
@@ -76,19 +80,24 @@ def predict(X, w, threshold=0.5):
 # ----------------------------
 # 6. TRAIN MODEL
 # ----------------------------
+n_neg = np.sum(y_train == 0)
+n_pos = np.sum(y_train == 1)
+pos_weight = n_neg / (n_pos + 1e-12)
+
 weights, losses = fit_logistic_regression(
     X_train,
     y_train,
     learning_rate=0.05,
     iterations=5000,
-    reg_lambda=0.1
+    reg_lambda=0.1,
+    pos_weight=pos_weight
 )
 
 # ----------------------------
 # 7. EVALUATE MODEL
 # ----------------------------
 y_prob = predict_proba(X_test, weights)
-y_pred = predict(X_test, weights, threshold=0.5)
+y_pred = predict(X_test, weights, threshold=0.59)
 
 acc = accuracy_score(y_test, y_pred)
 prec = precision_score(y_test, y_pred)
@@ -117,14 +126,15 @@ results = pd.DataFrame({
     "Value": [acc, prec, rec, f1, auc]
 })
 
-results.to_csv("logistic_regression_results_only_numpy_pandas.csv", index=False)
+# results.to_csv("logistic_regression_results_only_numpy_pandas.csv", index=False)
 
 # Optional: save coefficients
 coef_df = pd.DataFrame({
     "Feature": ["Intercept"] + [f"feature_{i}" for i in range(len(weights) - 1)],
     "Coefficient": weights.flatten()
 })
+"""
 coef_df.to_csv("logistic_regression_coefficients_only_numpy_pandas.csv", index=False)
-
 print("\nResults saved to logistic_regression_results_only_numpy_pandas.csv")
 print("Coefficients saved to logistic_regression_coefficients_only_numpy_pandas.csv")
+"""
