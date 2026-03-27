@@ -153,11 +153,6 @@ def prepare_data(path: str = "dataset.csv", random_seed: int = 54):
 
     return X_train, X_test, y_train, y_test
 
-
-# ---------------------------------------------------------------------------
-# Quick sanity check
-# ---------------------------------------------------------------------------
-
 if __name__ == "__main__":
     X_train, X_test, y_train, y_test = prepare_data()
     print(f"X_train : {X_train.shape}  y_train : {y_train.shape}")

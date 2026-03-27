@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Created on Sun Mar 22 12:58:34 2026
 
@@ -14,7 +12,6 @@ from utils import (confusion_matrix_binary, accuracy_score, precision_score,
 
 # ============================================================
 # LOGISTIC REGRESSION FROM SCRATCH
-# Only numpy and pandas are used
 # ============================================================
 
 # ----------------------------
@@ -74,11 +71,7 @@ def predict(X, w, threshold=0.5):
     return (probs >= threshold).astype(int)
 
 # ----------------------------
-# 5. METRICS — from utils.py
-# ----------------------------
-
-# ----------------------------
-# 6. TRAIN MODEL
+# 5. TRAIN MODEL
 # ----------------------------
 n_neg = np.sum(y_train == 0)
 n_pos = np.sum(y_train == 1)
@@ -94,7 +87,7 @@ weights, losses = fit_logistic_regression(
 )
 
 # ----------------------------
-# 7. EVALUATE MODEL
+# 6. EVALUATE MODEL
 # ----------------------------
 y_prob = predict_proba(X_test, weights)
 y_pred = predict(X_test, weights, threshold=0.59)
@@ -107,7 +100,7 @@ auc = roc_auc_score_manual(y_test, y_prob)
 cm = confusion_matrix_binary(y_test, y_pred)
 
 # ----------------------------
-# 8. PRINT RESULTS
+# 7. PRINT RESULTS
 # ----------------------------
 print("Logistic Regression Results")
 print("Accuracy : {:.4f}".format(acc))
@@ -119,7 +112,7 @@ print("\nConfusion Matrix:")
 print(cm)
 
 # ----------------------------
-# 9. SAVE RESULTS
+# . SAVE RESULTS
 # ----------------------------
 results = pd.DataFrame({
     "Metric": ["Accuracy", "Precision", "Recall", "F1-score", "ROC-AUC"],

@@ -10,8 +10,6 @@ import matplotlib.pyplot as plt
 from knn import KNearestNeighbors
 from data_prep import prepare_data
 
-
-
 # ---------------------------------------------------------------------------
 # 1. Cross-Validation Splitter (stratified)
 # ---------------------------------------------------------------------------

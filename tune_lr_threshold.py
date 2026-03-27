@@ -24,12 +24,12 @@ import matplotlib.pyplot as plt
 
 from data_prep import prepare_data, add_bias
 from lr import fit_logistic_regression, predict_proba
-from tune_knn import get_cv_splits          # reuse existing stratified splitter
+from tune_knn import get_cv_splits
 from utils import precision_score, recall_score, f1_score, accuracy_score
 
 
 # ─────────────────────────────────────────────────────────────
-# CONFIGURATION  ← only change things here
+# CONFIGURATION
 # ─────────────────────────────────────────────────────────────
 N_FOLDS        = 5
 LEARNING_RATE  = 0.05
@@ -69,7 +69,6 @@ def cv_threshold_search(
 
     # Collect predicted probabilities for every fold first,
     # then evaluate all thresholds without retraining.
-    # This reduces training runs from (n_thresholds × n_folds) to just n_folds.
     print(f"  Training {n_folds} CV folds...")
     fold_val_probs  = []   # predicted probabilities on val set per fold
     fold_val_labels = []   # true labels on val set per fold
@@ -102,7 +101,6 @@ def cv_threshold_search(
         fold_val_labels.append(y_cv_val.flatten())
         print(f"    Fold {fold_idx + 1}/{n_folds} done.")
 
-    # Now sweep thresholds — no retraining needed
     print(f"\n  Sweeping {len(thresholds)} thresholds...")
     results = {}
 
