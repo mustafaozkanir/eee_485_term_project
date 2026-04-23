@@ -22,9 +22,8 @@ Pipeline:
 import numpy as np
 import matplotlib.pyplot as plt
 
-# from data_prep import prepare_data, add_bias
-from data_prep_filtered import prepare_data
-from data_prep import add_bias
+from data_prep import prepare_data, add_bias
+
 
 from lr import fit_logistic_regression, predict_proba
 from tune_knn import get_cv_splits

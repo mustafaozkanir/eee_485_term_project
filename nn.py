@@ -1,14 +1,5 @@
-"""
-nn.py
------
-Feed-forward Neural Network from scratch (numpy only).
-Binary classification with ReLU hidden layers and sigmoid output.
-Class-weighted loss to handle the 78/22 imbalance.
-"""
-
 import numpy as np
-# from data_prep import prepare_data
-from data_prep_filtered import prepare_data
+from data_prep import prepare_data
 
 from utils import (accuracy_score, precision_score, recall_score,
                    f1_score, roc_auc_score_manual, plot_confusion_matrix)
