@@ -1,6 +1,6 @@
 import numpy as np
-import pandas as pd
-from utils import precision_score, recall_score, f1_score, plot_confusion_matrix
+from utils import (precision_score, recall_score, f1_score,
+                   accuracy_score, roc_auc_score_manual, plot_confusion_matrix)
 from data_prep import prepare_data
 
 # ---------------------------------------------------------------------------
@@ -138,36 +138,16 @@ class DecisionTree:
     def predict(self, X: np.ndarray, threshold: float = 0.5) -> np.ndarray:
         return (self.predict_proba(X) >= threshold).astype(int)
 
-    def evaluate(self, X: np.ndarray, y: np.ndarray):
-        y_true = np.array(y)
+    def evaluate(self, X: np.ndarray, y: np.ndarray, threshold: float = 0.5):
         y_prob = self.predict_proba(X)
-        y_pred = (y_prob >= 0.3).astype(int)
-        tp = np.sum((y_true == 1) & (y_pred == 1))
-        tn = np.sum((y_true == 0) & (y_pred == 0))
-        fp = np.sum((y_true == 0) & (y_pred == 1))
-        fn = np.sum((y_true == 1) & (y_pred == 0))
-        
-        # Confusion Matrix
-        conf_matrix = pd.DataFrame([[tn, fp], [fn, tp]], index=['Actual 0', 'Actual 1'], columns=['Pred 0', 'Pred 1'])
-        
-        # ROC-AUC calculation
-        indices = np.argsort(y_prob)[::-1]
-        y_p_sort, y_t_sort = y_prob[indices], y_true[indices]
-        tpr, fpr = [0.0], [0.0]
-        n_p, n_n = np.sum(y_true == 1), np.sum(y_true == 0)
-        c_tp, c_fp = 0, 0
-        for i in range(len(y_t_sort)):
-            if y_t_sort[i] == 1: c_tp += 1
-            else: c_fp += 1
-            tpr.append(c_tp / n_p); fpr.append(c_fp / n_n)
-            
+        y_pred = (y_prob >= threshold).astype(int)
         return {
-            "accuracy": (tp + tn) / len(y_true),
-            "precision": tp / (tp + fp) if (tp + fp) > 0 else 0.0,
-            "recall": tp / (tp + fn) if (tp + fn) > 0 else 0.0,
-            "f1_score": 2 * (tp / (tp + fp + 1e-12) * (tp / (tp + fn + 1e-12))) / (tp / (tp + fp + 1e-12) + tp / (tp + fn + 1e-12) + 1e-12),
-            "roc_auc": np.trapezoid(tpr, fpr),
-            "confusion_matrix": conf_matrix
+            "accuracy"  : accuracy_score(y, y_pred),
+            "precision" : precision_score(y, y_pred),
+            "recall"    : recall_score(y, y_pred),
+            "f1_score"  : f1_score(y, y_pred),
+            "roc_auc"   : roc_auc_score_manual(y, y_prob),
+            "y_pred"    : y_pred,
         }
 
 # ---------------------------------------------------------------------------
@@ -180,7 +160,7 @@ if __name__ == "__main__":
     print(f" Train: {X_train.shape} Test: {X_test.shape}")
 
     # Hyper-parameters
-    max_depth = 8
+    max_depth = 6
     min_samples_split = 10
     min_samples_leaf = 5
 
@@ -198,16 +178,16 @@ if __name__ == "__main__":
     )
     model.fit(X_train, y_train)
 
+    threshold = 0.3
     print("\nEvaluating Decision Tree on test set...")
-    metrics = model.evaluate(X_test, y_test)
-    
-    # Extract values
-    y_pred = model.predict(X_test)
-    accuracy = metrics["accuracy"]
+    metrics = model.evaluate(X_test, y_test, threshold=threshold)
+
+    y_pred    = metrics["y_pred"]
+    accuracy  = metrics["accuracy"]
     precision = metrics["precision"]
-    recall = metrics["recall"]
-    f1 = metrics["f1_score"]
-    roc_auc = metrics["roc_auc"]
+    recall    = metrics["recall"]
+    f1        = metrics["f1_score"]
+    roc_auc   = metrics["roc_auc"]
 
     print(f"\nDecision Tree Results")
     print(f"Accuracy : {accuracy:.4f}")
