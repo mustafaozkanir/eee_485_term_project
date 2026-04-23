@@ -7,21 +7,24 @@ Class-weighted loss to handle the 78/22 imbalance.
 """
 
 import numpy as np
-from data_prep import prepare_data
+# from data_prep import prepare_data
+from data_prep_filtered import prepare_data
+
 from utils import (accuracy_score, precision_score, recall_score,
                    f1_score, roc_auc_score_manual, plot_confusion_matrix)
+
 
 # ============================================================
 # CONFIGURATION
 # ============================================================
 
-HIDDEN_SIZES   = [16, 8, 4]      # hidden layer widths
-LEARNING_RATE  = 0.001
-ITERATIONS     = 1000
-REG_LAMBDA     = 50
+HIDDEN_SIZES   = [8]     # hidden layer widths
+LEARNING_RATE  = 0.01
+ITERATIONS     = 4100
+REG_LAMBDA     = 0.4
 BATCH_SIZE     = 1024
-THRESHOLD      = 0.52
-POS_WEIGHT     = None          # None = compute from data (n_neg/n_pos); set a number to override
+THRESHOLD      = 0.58
+POS_WEIGHT     = None         # None = compute from data (n_neg/n_pos); set a number to override
 RANDOM_SEED    = 42
 
 

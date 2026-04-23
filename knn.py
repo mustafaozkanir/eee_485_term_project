@@ -6,6 +6,7 @@ k-Nearest Neighbors classifier implemented from scratch.
 
 import numpy as np
 from data_prep import prepare_data
+# from data_prep_filtered import prepare_data
 from utils import precision_score, recall_score, f1_score, plot_confusion_matrix
 
 
