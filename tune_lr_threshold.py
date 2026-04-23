@@ -139,7 +139,7 @@ if __name__ == "__main__":
                            THRESHOLD_STEP)
 
     # ── 2. CV threshold search ─────────────────────────────────
-    print(f"\nRunning {N_FOLDS}-fold CV threshold search (optimising for Recall)...")
+    print(f"\nRunning {N_FOLDS}-fold CV threshold search (optimising for F1)...")
     cv_results = cv_threshold_search(
         X_train, y_train,
         thresholds=thresholds,
