@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 from data_prep import prepare_data, add_bias
 from utils import (confusion_matrix_binary, accuracy_score, precision_score,
-                   recall_score, f1_score, roc_auc_score_manual)
+                   recall_score, f1_score, roc_auc_score_manual, plot_confusion_matrix)
 
 # ============================================================
 # LOGISTIC REGRESSION FROM SCRATCH
@@ -112,6 +112,17 @@ print("\nConfusion Matrix:")
 print(cm)
 
 # ----------------------------
+# 8. SAVE CONFUSION MATRIX PLOT
+# ----------------------------
+plot_confusion_matrix(
+    y_test, y_pred,
+    class_names=["No Default", "Default"],
+    title="Logistic Regression — Confusion Matrix",
+    save_path="lr_confusion_matrix.png",
+)
+print("\nPlot saved as 'lr_confusion_matrix.png'.")
+
+# ----------------------------
 # . SAVE RESULTS
 # ----------------------------
 results = pd.DataFrame({
@@ -126,8 +137,3 @@ coef_df = pd.DataFrame({
     "Feature": ["Intercept"] + [f"feature_{i}" for i in range(len(weights) - 1)],
     "Coefficient": weights.flatten()
 })
-"""
-coef_df.to_csv("logistic_regression_coefficients_only_numpy_pandas.csv", index=False)
-print("\nResults saved to logistic_regression_results_only_numpy_pandas.csv")
-print("Coefficients saved to logistic_regression_coefficients_only_numpy_pandas.csv")
-"""
