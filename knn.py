@@ -6,7 +6,6 @@ k-Nearest Neighbors classifier implemented from scratch.
 
 import numpy as np
 from data_prep import prepare_data
-# from data_prep_filtered import prepare_data
 from utils import precision_score, recall_score, f1_score, plot_confusion_matrix
 
 
@@ -125,7 +124,7 @@ if __name__ == "__main__":
     X_train, X_test, y_train, y_test = prepare_data()
     print(f"  Train: {X_train.shape}  Test: {X_test.shape}")
 
-    k = 128
+    k = 512
     model = KNearestNeighbors(k=k)
     model.fit(X_train, y_train)
 
