@@ -65,8 +65,8 @@ def mutual_information(x, y, n_bins=10):
             joint[xi, yi] = np.sum((x == xv) & (y == yv))
 
     p_xy  = joint / m
-    p_x   = joint.sum(axis=1) / m   # marginal of x
-    p_y   = joint.sum(axis=0) / m   # marginal of y
+    p_x   = joint.sum(axis=1) / m
+    p_y   = joint.sum(axis=0) / m
 
     # MI = Σ p(x,y) · log(p(x,y) / p(x)·p(y))
     mi = 0.0

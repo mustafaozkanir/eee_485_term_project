@@ -127,7 +127,8 @@ class NeuralNetwork:
         sw        = np.where(y_flat == 1, self.pos_weight, 1.0)
         # Binary Cross Entropy Loss
         bce       = -np.mean(sw * (y_flat * np.log(y_pred) + (1 - y_flat) * np.log(1 - y_pred)))
-        # Regularization Loss
+        # Regularization Loss 
+        # (m is to normalize bu sample count, 2 is for simplifying the derivative of w**2)
         l2        = (self.reg_lambda / (2 * m)) * sum(np.sum(W ** 2) for W in self.weights)
         return bce + l2
 

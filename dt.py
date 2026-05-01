@@ -164,8 +164,6 @@ if __name__ == "__main__":
     min_samples_split = 10
     min_samples_leaf = 5
 
-    
-
     print(
         f"\nTraining Decision Tree "
         f"(max_depth={max_depth}, min_samples_split={min_samples_split}, "
