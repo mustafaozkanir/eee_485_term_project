@@ -16,7 +16,7 @@ from data_prep import prepare_data
 
 def get_cv_splits(X: np.ndarray, y: np.ndarray, n_splits: int = 5, random_seed: int = 42):
     """
-    Stratified k-fold cross-validation splitter implemented from scratch.
+    Stratified k-fold cross-validation splitter.
 
     Stratification ensures each fold mirrors the class distribution of the
     full dataset, which matters here because classes are imbalanced (~78/22).
@@ -65,7 +65,7 @@ def calculate_error(y_true: np.ndarray, y_pred: np.ndarray) -> float:
 
 def calculate_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> dict:
     """
-    Compute precision, recall, and F1 from scratch.
+    Compute precision, recall, and F1.
     Returns a dict with keys: precision, recall, f1.
     """
     y_true = np.asarray(y_true)

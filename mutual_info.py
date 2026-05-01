@@ -1,7 +1,7 @@
 """
 mutual_info.py
 --------------
-Mutual Information between features and the target from scratch (numpy only).
+Mutual Information between features and the target.
 
 Unlike Pearson correlation, MI captures non-linear relationships.
 Continuous features are discretized via equal-width binning before computing MI.

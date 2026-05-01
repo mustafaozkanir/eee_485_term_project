@@ -1,7 +1,7 @@
 """
 knn.py
 ------
-k-Nearest Neighbors classifier implemented from scratch.
+k-Nearest Neighbors classifier implemented.
 """
 
 import numpy as np
