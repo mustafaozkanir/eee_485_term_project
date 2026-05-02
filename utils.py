@@ -2,7 +2,6 @@
 utils.py
 --------
 Shared metrics and visualisation utilities.
-Only numpy and matplotlib — no scikit-learn.
 """
 
 import numpy as np
@@ -79,22 +78,7 @@ def plot_confusion_matrix(
     title: str = "Confusion Matrix",
     save_path: str = None,
 ) -> None:
-    """
-    Plot a styled confusion matrix.
 
-    Diagonal cells (correct predictions) are shown in blue-green tones.
-    Off-diagonal cells (errors) are shown in warm red tones.
-    Each cell shows the raw count and the percentage of the true class total.
-
-    Parameters
-    ----------
-    y_true      : ground-truth labels
-    y_pred      : predicted labels
-    class_names : list of strings for axis tick labels.
-                  Defaults to the sorted unique values of y_true.
-    title       : plot title
-    save_path   : if provided, saves the figure to this path
-    """
     y_true = np.asarray(y_true).flatten()
     y_pred = np.asarray(y_pred).flatten()
 
@@ -104,7 +88,7 @@ def plot_confusion_matrix(
     if class_names is None:
         class_names = [str(c) for c in classes]
 
-    # Build confusion matrix from scratch
+    # Build confusion matrix
     cm = np.zeros((n_classes, n_classes), dtype=np.int64)
     for true_idx, true_cls in enumerate(classes):
         for pred_idx, pred_cls in enumerate(classes):
@@ -128,15 +112,12 @@ def plot_confusion_matrix(
 
     fig, ax = plt.subplots(figsize=(5 + n_classes, 4 + n_classes))
 
-    # Normalise each cell independently against its own colour range
-    # so both small and large matrices look good
     for true_idx in range(n_classes):
         for pred_idx in range(n_classes):
             value    = cm[true_idx, pred_idx]
             pct      = cm_pct[true_idx, pred_idx]
             is_diag  = (true_idx == pred_idx)
 
-            # Colour intensity proportional to percentage within its cmap
             intensity = pct / 100.0
             colour = (correct_cmap(intensity) if is_diag
                       else error_cmap(intensity))
@@ -165,7 +146,7 @@ def plot_confusion_matrix(
 
     # ── Axes formatting ────────────────────────────────────────────────────
     ax.set_xlim(-0.5, n_classes - 0.5)
-    ax.set_ylim(n_classes - 0.5, -0.5)      # invert y so row 0 is at top
+    ax.set_ylim(n_classes - 0.5, -0.5)
 
     ax.set_xticks(range(n_classes))
     ax.set_yticks(range(n_classes))

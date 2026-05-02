@@ -10,12 +10,12 @@ Pipeline:
          - Run k-fold CV on X_train
          - Train LR on each CV-train fold
          - Predict probabilities on each CV-val fold
-         - Compute recall at this threshold on each fold
-         - Average recall across k folds
-    3. Select threshold with highest average CV recall
+         - Compute F1 at this threshold on each fold
+         - Average F1 across k folds
+    3. Select threshold with highest average CV F1
     4. Train final LR on full X_train with best threshold
     5. Evaluate on held-out X_test and print all metrics
-    6. Plot average CV recall (and precision/F1 for context)
+    6. Plot average CV F1 (and precision/F1 for context)
        vs threshold
 """
 

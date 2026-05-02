@@ -90,7 +90,7 @@ weights, losses = fit_logistic_regression(
 # 6. EVALUATE MODEL
 # ----------------------------
 y_prob = predict_proba(X_test, weights)
-y_pred = predict(X_test, weights, threshold=0.59)
+y_pred = predict(X_test, weights, threshold=0.55)
 
 acc = accuracy_score(y_test, y_pred)
 prec = precision_score(y_test, y_pred)

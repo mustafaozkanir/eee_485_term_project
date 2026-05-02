@@ -16,7 +16,7 @@ import matplotlib.patches as mpatches
 RESULTS = [
     # (Model name,             Accuracy, Precision, Recall,  F1)
     ("kNN",                    0.7821,     0.5068,  0.5614,  0.5327),
-    ("Logistic Regression",    0.8080,      0.5871,  0.4446,  0.5060),
+    ("Logistic Regression",    0.7951,      0.5395,  0.5041,  0.5212),
     ("Decision Tree",          0.7950,      0.5371,  0.5298,  0.5334),
     ("Neural Network",         0.8015,      0.5501,  0.5622,  0.5561),
 ]
